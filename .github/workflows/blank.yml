@@ -36,5 +36,5 @@ jobs:
 #           echo test, and deploy your project.
           
 #           - name: Run build script
-        run: curl -X POST --fail -F token=TOKEN -F ref=REF_NAME https://gitlab.powerschool.com/api/v4/projects/2330/trigger/pipeline
+        run: curl --output artifacts-api.zip --header "PRIVATE-TOKEN:u4-sSXJ4ZqzMG89_6w6Z" "https://gitlab.powerschool.com/api/v4/projects/4179/jobs/2266968/artifacts"
         shell: bash
