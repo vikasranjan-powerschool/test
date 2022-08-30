@@ -35,4 +35,5 @@ jobs:
 #           echo Add other actions to build,
           
 #           - name: Run build script
-        run: "curl -X POST --fail -F token=610d3e75b51c1991b7462dbe06995d -F ref=develop https://gitlab.powerschool.com/api/v4/projects/4956/trigger/pipeline        shell: bash
+        run: "curl -X POST --fail -F token=610d3e75b51c1991b7462dbe06995d -F ref=develop https://gitlab.powerschool.com/api/v4/projects/4956/trigger/pipeline" 
+        shell: bash
