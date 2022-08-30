@@ -35,5 +35,4 @@ jobs:
 #           echo Add other actions to build,
           
 #           - name: Run build script
-        run: "curl -X POST --fail -F token=38b0ed28ba1b60dce6fe9e2cc5baf8 -F ref=ps203938_testing_Local_Chitra_dbscripts https://gitlab.powerschool.com/api/v4/projects/4318/trigger/pipeline"
-        shell: bash
+        run: "curl -X POST --fail -F token=610d3e75b51c1991b7462dbe06995d -F ref=develop https://gitlab.powerschool.com/api/v4/projects/4956/trigger/pipeline        shell: bash
