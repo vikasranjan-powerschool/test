@@ -1,36 +1,51 @@
-# This is a basic workflow to help you get started with Actions
+name: Run WebdriverIO Tests
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+      - web
+      - api
+    paths-ignore:
+      - '**/*.md'
+  schedule:
+    - cron: '0 0 * * *' # Adjust as needed
   workflow_dispatch:
+  repository_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  run-tests:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    container:
+      image: ${{ secrets.DEFAULT_DOCKER_IMAGE }}
+
+    env:
+      IMAGE_TAG: ${{ secrets.CI_REGISTRY_IMAGE }}:${{ github.ref_name }}
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Set executable permissions
+        run: chmod +x build.sh
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Run build
+        run: ./build.sh
+
+      - name: Run tests
+        run: npx wdio ./data-science/run/pb.chatbot.run.ts | tee test-output.log
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-results
+          path: |
+            _results/
+            _results/data-science
+            _results/light-report
+            _results/mochawesome
+            _results/wdio-logs
+            _results/screenshots
+            *.log
+          retention-days: 2
