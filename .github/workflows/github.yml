@@ -7,8 +7,8 @@ on:
       - api
     paths-ignore:
       - '**/*.md'
-  schedule:
-    - cron: '0 0 * * *' # Adjust as needed
+  # schedule:
+    # - cron: '0 0 * * *' # Adjust as needed
   workflow_dispatch:
   repository_dispatch:
 
